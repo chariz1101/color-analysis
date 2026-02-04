@@ -2,9 +2,11 @@ import cv2
 import mediapipe as mp
 import numpy as np
 
+# Initialize MediaPipe
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(static_image_mode=True, max_num_faces=1, refine_landmarks=True)
 
+# 12-Season Palettes
 PALETTES = {
     "Deep Winter": ["#111111", "#191970", "#800020", "#FFFFFF"],
     "Cool Winter": ["#000080", "#C0C0C0", "#FF007F", "#000000"],
@@ -36,6 +38,7 @@ AVOID_PALETTES = {
 }
 
 def robust_white_balance(img):
+    """Normalizes the image colors to reduce the impact of yellow/blue lighting."""
     result = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     avg_a = np.average(result[:, :, 1])
     avg_b = np.average(result[:, :, 2])
@@ -60,6 +63,7 @@ def get_face_data(image):
     return avg_rgb, processed_img, landmarks
 
 def analyze_12_seasons(rgb_color):
+    """Applies the 12-season flow theory based on CIELAB values."""
     rgb_unit = np.uint8([[rgb_color]])
     lab_unit = cv2.cvtColor(rgb_unit, cv2.COLOR_RGB2LAB)[0][0]
     l, a, b = lab_unit 
