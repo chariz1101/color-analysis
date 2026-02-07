@@ -13,7 +13,7 @@ A project for analyzing and categorizing colors.
 
 ### Prerequisites
 
-- [List your requirements]
+- //
 
 ### Installation
 
